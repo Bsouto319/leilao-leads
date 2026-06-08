@@ -3,8 +3,38 @@ const router  = express.Router()
 const db      = require('../services/supabase')
 const wa      = require('../services/whatsapp')
 
+const DEMO_LOT = {
+  id: 'demo',
+  slug: 'demo',
+  title: 'Terreno 600m² — Residencial Bela Vista',
+  description: 'Terreno plano em condomínio fechado, documentação regularizada. Infraestrutura completa: asfalto, água, luz e esgoto. Excelente para construção imediata.',
+  city: 'Brasília',
+  state: 'DF',
+  area_m2: 600,
+  price_from: 95000,
+  price_to: 130000,
+  auction_date: '2026-07-15',
+  auction_url: null,
+  photos: [
+    { url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80' },
+    { url: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80' },
+    { url: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80' },
+    { url: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80' },
+  ],
+  active: true,
+  // liberado após captura
+  lat: -15.7801,
+  lng: -47.9292,
+  full_description: 'Terreno com matrícula n° 45.872 no Cartório de Registro de Imóveis. Sem ônus ou pendências. Dimensões: 20m x 30m. Frente para rua pavimentada. Zona residencial R1 — permite construção de até 3 andares. Entorno valorizado com comércio, escolas e transporte público a 500m.',
+  pdf_url: null,
+}
+
 // GET /api/lots/:slug — info pública (superficial)
 router.get('/lots/:slug', async (req, res) => {
+  if (req.params.slug === 'demo') {
+    const { lat, lng, full_description, pdf_url, ...pub } = DEMO_LOT
+    return res.json(pub)
+  }
   try {
     const lot = await db.getLot(req.params.slug)
     res.json(lot)
@@ -28,10 +58,14 @@ router.post('/leads', async (req, res) => {
   }
 
   let lot
-  try {
-    lot = await db.getLotFull(lotSlug)
-  } catch {
-    return res.status(404).json({ error: 'Lote não encontrado' })
+  if (lotSlug === 'demo') {
+    lot = DEMO_LOT
+  } else {
+    try {
+      lot = await db.getLotFull(lotSlug)
+    } catch {
+      return res.status(404).json({ error: 'Lote não encontrado' })
+    }
   }
 
   // Salva lead

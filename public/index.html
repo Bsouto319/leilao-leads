@@ -159,20 +159,24 @@
 
       // Fotos (até 2 visíveis + 1 blur)
       const container = document.getElementById('lot-photos')
-      const photos = lot.photos || []
+      const DEFAULT_PHOTOS = [
+        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80',
+        'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80',
+        'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80',
+      ]
+      const photos = (lot.photos && lot.photos.length > 0) ? lot.photos : DEFAULT_PHOTOS.map(u => ({ url: u }))
       photos.slice(0, 2).forEach(p => {
         const img = document.createElement('img')
         img.src = p.url || p
         img.style.width = '200px'
         container.appendChild(img)
       })
-      if (photos.length > 2 || photos.length === 0) {
-        const wrap = document.createElement('div')
-        wrap.className = 'blur-wrap'
-        wrap.style.width = '200px'
-        wrap.innerHTML = `<img src="${photos[2]?.url || photos[2] || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400'}" style="width:200px;height:160px;object-fit:cover"/><div class="lock"><span>🔒</span><p>+${Math.max(0, photos.length - 2)} fotos</p></div>`
-        container.appendChild(wrap)
-      }
+      const blurSrc = photos[2]?.url || photos[2] || DEFAULT_PHOTOS[2]
+      const wrap = document.createElement('div')
+      wrap.className = 'blur-wrap'
+      wrap.style.width = '200px'
+      wrap.innerHTML = `<img src="${blurSrc}" style="width:200px;height:160px;object-fit:cover"/><div class="lock"><span>🔒</span><p>${photos.length > 3 ? '+' + (photos.length - 2) + ' fotos' : 'Ver todas'}</p></div>`
+      container.appendChild(wrap)
     })
     .catch(() => {
       document.getElementById('lot-title').textContent = 'Lote não encontrado'
