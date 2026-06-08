@@ -17,4 +17,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
 })
 
-app.listen(PORT, () => console.log(`leilao-leads rodando na porta ${PORT}`))
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`leilao-leads rodando na porta ${PORT}`))
+}
+
+module.exports = app
