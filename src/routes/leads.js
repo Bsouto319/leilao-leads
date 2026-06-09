@@ -68,14 +68,20 @@ router.post('/leads', async (req, res) => {
     }
   }
 
-  // Salva lead (demo não persiste no banco)
+  // Salva lead (demo usa lot_id null para evitar FK inválida)
   let lead = { id: null }
-  if (lotSlug !== 'demo') {
-    try {
-      lead = await db.saveLead({ lotId: lot.id, lotSlug, nome, whatsapp: digits, regionInterest, priceRange })
-    } catch (err) {
-      return res.status(500).json({ error: 'Erro ao salvar lead' })
-    }
+  try {
+    lead = await db.saveLead({
+      lotId: lotSlug !== 'demo' ? lot.id : null,
+      lotSlug,
+      nome,
+      whatsapp: digits,
+      regionInterest,
+      priceRange,
+    })
+  } catch (err) {
+    console.error('[leads] erro ao salvar:', err.message)
+    // não bloqueia o unlock — apenas loga
   }
 
   // Retorna dados desbloqueados imediatamente
