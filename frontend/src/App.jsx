@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
 import LeilaoLanding from "./LeilaoLanding"
+import AdminCRM from "./AdminCRM"
 import { defaultTenant, demoLot, adaptApiLot } from "./theme"
 
 export default function App() {
+  if (window.location.pathname === "/admin") return <AdminCRM />
   const slug = new URLSearchParams(location.search).get("lot") || "demo"
   const [lot, setLot]       = useState(null)
   const [tenant, setTenant] = useState(defaultTenant)
