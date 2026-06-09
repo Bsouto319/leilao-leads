@@ -3,3 +3,5 @@ node_modules
 *.log
 
 .vercel
+frontend/node_modules
+frontend/dist
