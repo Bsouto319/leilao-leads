@@ -90,6 +90,7 @@ router.post('/leads', async (req, res) => {
       fullDescription: lot.full_description,
       pdfUrl: lot.pdf_url,
       photos: lot.photos || [],
+      consultorPhone: process.env.CONSULTOR_PHONE || '',
     }
   })
 

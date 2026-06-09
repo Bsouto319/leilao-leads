@@ -3,142 +3,366 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Oportunidade de Leilão</title>
+  <title id="page-title">Oportunidade de Leilão</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@700;800;900&display=swap" rel="stylesheet"/>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0f4f8;
+      color: #0f172a;
+      min-height: 100dvh;
+    }
 
-    /* ── TOPO ── */
-    .topbar{background:#0f172a;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
-    .topbar-logo{display:flex;align-items:center;gap:10px}
-    .topbar-logo .dot{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center}
-    .topbar-logo .dot span{font-size:14px}
-    .topbar-brand{font-size:15px;font-weight:800;color:white}
-    .topbar-badge{background:#f59e0b;color:#0f172a;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;animation:badgepulse 2s infinite}
-    @keyframes badgepulse{0%,100%{opacity:1}50%{opacity:.7}}
+    /* ─── TOPBAR ─── */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: #0d1f3c;
+      padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 16px rgba(0,0,0,.4);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 10px; }
+    .topbar-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .topbar-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 14px; font-weight: 800; color: #fff;
+    }
+    .topbar-badge {
+      background: #f59e0b; color: #0d1f3c;
+      font-family: 'Sora', sans-serif;
+      font-size: 10px; font-weight: 800;
+      padding: 4px 10px; border-radius: 20px;
+      letter-spacing: .03em;
+      animation: fadePulse 2s ease-in-out infinite;
+    }
+    @keyframes fadePulse { 0%,100%{opacity:1} 50%{opacity:.65} }
 
-    /* ── HERO ── */
-    .hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);padding:40px 20px 48px;text-align:center}
-    .hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=60') center/cover;opacity:.08}
-    .hero-content{position:relative}
-    .hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:#f59e0b18;color:#fbbf24;border:1px solid #f59e0b30;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:.04em;margin-bottom:20px}
-    .hero-eyebrow .live{width:7px;height:7px;border-radius:50%;background:#f59e0b;animation:pulse 1.4s infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-    .hero h1{font-size:28px;font-weight:900;color:white;line-height:1.15;margin-bottom:12px}
-    .hero h1 em{color:#38bdf8;font-style:normal;display:block}
-    .hero-sub{color:#94a3b8;font-size:15px;line-height:1.6;max-width:340px;margin:0 auto 28px}
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #0d1f3c 0%, #1a3a6e 55%, #0d1f3c 100%);
+      padding: 36px 20px 40px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=50') center/cover;
+      opacity: .07;
+    }
+    .hero-inner { position: relative; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(245,158,11,.12);
+      border: 1px solid rgba(245,158,11,.3);
+      color: #fbbf24; border-radius: 30px;
+      padding: 6px 14px;
+      font-family: 'Sora', sans-serif;
+      font-size: 11px; font-weight: 800; letter-spacing: .05em;
+      margin-bottom: 18px;
+    }
+    .hero-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #f59e0b;
+      animation: liveDot 1.4s ease-in-out infinite;
+    }
+    @keyframes liveDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.75)} }
 
-    /* Estatísticas rápidas */
-    .hero-stats{display:flex;gap:0;justify-content:center;background:#ffffff0d;border:1px solid #ffffff10;border-radius:16px;overflow:hidden;margin:0 auto;max-width:360px}
-    .hero-stat{flex:1;padding:14px 8px;text-align:center;border-right:1px solid #ffffff10}
-    .hero-stat:last-child{border-right:none}
-    .hero-stat-val{font-size:18px;font-weight:900;color:white}
-    .hero-stat-val.green{color:#4ade80}
-    .hero-stat-val.yellow{color:#fbbf24}
-    .hero-stat-lbl{font-size:10px;color:#64748b;margin-top:2px;font-weight:600}
+    .hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 26px; font-weight: 900; line-height: 1.18;
+      color: #fff; margin-bottom: 10px;
+    }
+    .hero h1 em { display: block; color: #38bdf8; font-style: normal; }
+    .hero-sub {
+      color: #94a3b8; font-size: 14px; line-height: 1.65;
+      max-width: 320px; margin: 0 auto 28px;
+    }
+    .hero-stats {
+      display: flex;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; overflow: hidden;
+      max-width: 360px; margin: 0 auto;
+    }
+    .stat-item {
+      flex: 1; padding: 13px 6px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-val {
+      font-family: 'Sora', sans-serif;
+      font-size: 17px; font-weight: 900; color: #fff;
+    }
+    .stat-val.green { color: #4ade80; }
+    .stat-val.amber { color: #fbbf24; }
+    .stat-lbl { font-size: 10px; color: #475569; font-weight: 600; margin-top: 2px; }
 
-    /* ── GALERIA ── */
-    .section{padding:24px 20px}
-    .section-label{font-size:11px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .section-label::after{content:'';flex:1;height:1px;background:#e2e8f0}
+    /* ─── GALLERY ─── */
+    .section { padding: 22px 20px 0; }
+    .section-title {
+      font-size: 10px; font-weight: 700; color: #64748b;
+      text-transform: uppercase; letter-spacing: .07em;
+      margin-bottom: 11px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-title::after { content:''; flex:1; height:1px; background:#e2e8f0; }
 
-    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .gallery .main{grid-column:1/-1;border-radius:14px;overflow:hidden;position:relative;height:200px}
-    .gallery .main img{width:100%;height:100%;object-fit:cover}
-    .gallery .thumb{border-radius:10px;overflow:hidden;height:110px;position:relative}
-    .gallery .thumb img{width:100%;height:100%;object-fit:cover}
-    .gallery .thumb.blur-card img{filter:blur(6px);transform:scale(1.05)}
-    .gallery .thumb.blur-card .overlay{position:absolute;inset:0;background:rgba(15,23,42,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-    .gallery .thumb.blur-card .overlay .icon{font-size:22px}
-    .gallery .thumb.blur-card .overlay p{font-size:11px;color:white;font-weight:700}
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .gal-main {
+      grid-column: 1/-1; height: 195px;
+      border-radius: 14px; overflow: hidden; position: relative;
+    }
+    .gal-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gal-thumb {
+      height: 108px; border-radius: 11px; overflow: hidden; position: relative;
+    }
+    .gal-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gal-lock {
+      position: absolute; inset: 0;
+      background: rgba(13,31,60,.62);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 4px;
+    }
+    .gal-lock .lock-icon { font-size: 20px; }
+    .gal-lock p { font-size: 11px; color: #e2e8f0; font-weight: 700; }
 
-    /* ── INFO CARDS ── */
-    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
-    .info-card{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:14px}
-    .info-card .lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-    .info-card .val{font-size:16px;font-weight:800;color:#0f172a}
-    .info-card .val.highlight{color:#16a34a}
+    /* ─── INFO CHIPS ─── */
+    .info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .info-chip {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+      padding: 13px 14px;
+    }
+    .chip-lbl { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing:.05em; margin-bottom: 3px; }
+    .chip-val { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; color: #0f172a; }
+    .chip-val.price { color: #16a34a; }
 
-    /* ── BENEFÍCIOS ── */
-    .benefits{background:white;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:16px}
-    .benefit{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9}
-    .benefit:last-child{border-bottom:none;padding-bottom:0}
-    .benefit .icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-    .benefit-text strong{display:block;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px}
-    .benefit-text span{font-size:12px;color:#64748b;line-height:1.4}
+    /* ─── BENEFITS ─── */
+    .benefits {
+      background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 14px; overflow: hidden; margin-top: 14px;
+    }
+    .benefit {
+      display: flex; align-items: flex-start; gap: 13px;
+      padding: 13px 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .benefit:last-child { border-bottom: none; }
+    .b-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .b-title { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
+    .b-sub { font-size: 12px; color: #64748b; line-height: 1.45; }
 
-    /* ── GATE ── */
-    .gate-wrapper{background:linear-gradient(160deg,#0f172a,#1e3a5f);border-radius:20px;padding:24px;margin:0 20px 32px;box-shadow:0 8px 32px rgba(15,23,42,.2)}
-    .gate-title{font-size:18px;font-weight:900;color:white;margin-bottom:6px}
-    .gate-sub{font-size:13px;color:#94a3b8;line-height:1.5;margin-bottom:20px}
-    .gate-perks{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-    .gate-perk{display:flex;align-items:center;gap:10px;color:#cbd5e1;font-size:13px;font-weight:500}
-    .gate-perk .pk-icon{width:28px;height:28px;border-radius:8px;background:#38bdf818;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-    .gate-form{display:flex;flex-direction:column;gap:10px}
-    .gate-input{padding:15px 16px;border-radius:12px;border:1.5px solid #334155;background:#1e293b;color:#f8fafc;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border .2s;width:100%}
-    .gate-input::placeholder{color:#475569}
-    .gate-input:focus{border-color:#38bdf8}
-    .gate-btn{padding:16px;border-radius:12px;border:none;background:linear-gradient(135deg,#f59e0b,#ef4444);color:white;font-size:16px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;box-shadow:0 4px 16px rgba(245,158,11,.3)}
-    .gate-btn:disabled{opacity:.6;cursor:not-allowed}
-    .gate-terms{font-size:11px;color:#475569;text-align:center;margin-top:6px}
+    /* ─── GATE CARD ─── */
+    .gate-section { padding: 22px 20px 36px; }
+    .gate-card {
+      background: linear-gradient(160deg, #0d1f3c, #1a3a6e);
+      border-radius: 22px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(13,31,60,.35);
+    }
 
-    /* ── SPINNER ── */
-    .spinner{width:18px;height:18px;border:2.5px solid #ffffff40;border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .spinner.show{display:block}
+    .prog-track { height: 3px; background: rgba(255,255,255,.1); }
+    .prog-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #2563eb);
+      transition: width .4s ease;
+    }
 
-    /* ── DESBLOQUEADO ── */
-    #unlocked{display:none}
-    #unlocked.show{display:block}
-    .gate-wrapper.hidden{display:none}
+    .gate-head { padding: 22px 24px 0; }
+    .gate-head h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 19px; font-weight: 900; color: #fff; margin-bottom: 6px;
+    }
+    .gate-head p { font-size: 13px; color: #94a3b8; line-height: 1.55; }
 
-    .success-bar{display:flex;align-items:center;gap:12px;background:#16a34a18;border:1px solid #16a34a30;border-radius:14px;padding:14px 16px;margin:0 20px 16px}
-    .success-bar .s-icon{font-size:28px}
-    .success-bar h3{font-size:14px;font-weight:800;color:#4ade80}
-    .success-bar p{font-size:12px;color:#86efac;margin-top:1px}
+    .gate-perks { display: flex; flex-direction: column; padding: 16px 24px 0; }
+    .perk {
+      display: flex; align-items: center; gap: 11px;
+      padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 13px; font-weight: 500; color: #cbd5e1;
+    }
+    .perk:last-child { border-bottom: none; }
+    .perk-ico {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: rgba(56,189,248,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
 
-    .action-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:14px;font-size:15px;font-weight:800;text-decoration:none;margin:0 20px 10px;transition:opacity .15s}
-    .action-btn:hover{opacity:.85}
-    .action-btn.maps{background:#0ea5e9;color:white;box-shadow:0 4px 16px rgba(14,165,233,.3)}
-    .action-btn.pdf{background:#f59e0b;color:white;box-shadow:0 4px 16px rgba(245,158,11,.3)}
+    /* ─── FORM ─── */
+    .gate-form { padding: 18px 24px 26px; display: flex; flex-direction: column; gap: 12px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: 12px; font-weight: 600; color: #94a3b8; }
+    .field label span { color: #ef4444; }
 
-    .full-desc-box{margin:0 20px 32px;background:white;border:1px solid #e2e8f0;border-radius:14px;padding:18px}
-    .full-desc-box h4{font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-    .full-desc-box p{font-size:14px;color:#374151;line-height:1.7}
+    .inp-wrap { position: relative; }
+    .inp-ico {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; pointer-events: none; line-height: 1;
+    }
+    .inp-wrap input {
+      width: 100%; padding: 14px 44px 14px 42px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.06);
+      color: #f1f5f9; font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color .2s, background .2s;
+      -webkit-appearance: none;
+    }
+    .inp-wrap input::placeholder { color: #475569; }
+    .inp-wrap input:focus { border-color: #38bdf8; background: rgba(56,189,248,.07); }
+    .inp-wrap input.valid   { border-color: #4ade80; }
+    .inp-wrap input.invalid { border-color: #f87171; }
+
+    .inp-status {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 15px; transition: opacity .25s;
+    }
+    .err-msg { font-size: 12px; color: #f87171; display: none; }
+    .err-msg.show { display: block; }
+
+    .submit-btn {
+      width: 100%; padding: 16px;
+      border-radius: 13px; border: none;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #fff; font-family: 'Sora', sans-serif;
+      font-size: 16px; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      box-shadow: 0 6px 20px rgba(245,158,11,.35);
+      transition: opacity .2s, transform .1s;
+      margin-top: 4px;
+    }
+    .submit-btn:active { transform: scale(.98); }
+    .submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .spin {
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,.3);
+      border-top-color: #fff; border-radius: 50%;
+      display: none; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin.show { display: block; }
+
+    .gate-terms { text-align: center; font-size: 11px; color: #334155; }
+
+    /* ─── UNLOCK / SUCCESS ─── */
+    #unlocked { display: none; padding-bottom: 40px; }
+    #unlocked.show { display: block; }
+    .gate-section.hidden { display: none; }
+
+    .success-banner {
+      margin: 20px 20px 0;
+      background: linear-gradient(135deg, #052e16, #14532d);
+      border: 1px solid #16a34a;
+      border-radius: 18px; padding: 24px 20px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 12px;
+      animation: slideUp .55s cubic-bezier(.23,1.03,.32,1) both;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .success-circle {
+      width: 76px; height: 76px; border-radius: 50%;
+      background: rgba(34,197,94,.12);
+      border: 2px solid rgba(34,197,94,.35);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-path {
+      stroke-dasharray: 60; stroke-dashoffset: 60;
+      animation: drawCheck .65s ease .15s forwards;
+    }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+    .success-banner h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px; font-weight: 900; color: #4ade80;
+    }
+    .success-banner p { font-size: 13px; color: #86efac; line-height: 1.55; }
+
+    .action-btns { display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0; }
+    .action-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px 20px; border-radius: 14px;
+      font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity .15s, transform .1s;
+      animation: slideUp .55s cubic-bezier(.23,1.03,.32,1) both;
+    }
+    .action-btn:active { transform: scale(.97); }
+    .action-btn.maps {
+      background: #0ea5e9; color: #fff;
+      box-shadow: 0 6px 20px rgba(14,165,233,.35);
+      animation-delay: .1s;
+    }
+    .action-btn.pdf {
+      background: #f59e0b; color: #fff;
+      box-shadow: 0 6px 20px rgba(245,158,11,.3);
+      animation-delay: .2s;
+    }
+    .action-btn.wpp {
+      background: #16a34a; color: #fff;
+      box-shadow: 0 6px 20px rgba(22,163,74,.3);
+      animation-delay: .3s;
+    }
+
+    .full-desc {
+      margin: 14px 20px 0;
+      background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 14px; padding: 18px;
+      animation: slideUp .55s cubic-bezier(.23,1.03,.32,1) .25s both;
+    }
+    .full-desc h4 {
+      font-size: 11px; font-weight: 700; color: #64748b;
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+    }
+    .full-desc p { font-size: 14px; color: #374151; line-height: 1.7; }
   </style>
 </head>
 <body>
 
 <!-- Topbar -->
 <div class="topbar">
-  <div class="topbar-logo">
-    <div class="dot"><span>🏠</span></div>
-    <span class="topbar-brand">Leilão de Terrenos</span>
+  <div class="topbar-left">
+    <div class="topbar-icon">🏡</div>
+    <span class="topbar-name">Leilão de Terrenos</span>
   </div>
   <div class="topbar-badge">🔥 LEILÃO ATIVO</div>
 </div>
 
 <!-- Hero -->
 <div class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow"><div class="live"></div> OPORTUNIDADE EXCLUSIVA</div>
-    <h1 id="lot-title">Carregando lote...</h1>
-    <p class="hero-sub" id="lot-desc">Aguarde enquanto carregamos as informações do lote.</p>
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><div class="hero-dot"></div>OPORTUNIDADE EXCLUSIVA</div>
+    <h1 id="lot-title">Carregando…</h1>
+    <p class="hero-sub" id="lot-desc">Aguarde enquanto buscamos as informações do lote.</p>
     <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-val" id="stat-area">—</div>
-        <div class="hero-stat-lbl">Área</div>
+      <div class="stat-item">
+        <div class="stat-val" id="stat-area">—</div>
+        <div class="stat-lbl">Área</div>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-val green" id="stat-price">—</div>
-        <div class="hero-stat-lbl">Lance inicial</div>
+      <div class="stat-item">
+        <div class="stat-val green" id="stat-price">—</div>
+        <div class="stat-lbl">Lance inicial</div>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-val yellow" id="stat-date">—</div>
-        <div class="hero-stat-lbl">Data leilão</div>
+      <div class="stat-item">
+        <div class="stat-val amber" id="stat-date">—</div>
+        <div class="stat-lbl">Data leilão</div>
       </div>
     </div>
   </div>
@@ -146,192 +370,302 @@
 
 <!-- Galeria -->
 <div class="section">
-  <div class="section-label">Fotos do terreno</div>
+  <div class="section-title">Fotos do terreno</div>
   <div class="gallery" id="gallery">
-    <div class="main"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" alt="Terreno"/></div>
-    <div class="thumb"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80" alt="Terreno"/></div>
-    <div class="thumb blur-card">
-      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80" alt=""/>
-      <div class="overlay"><div class="icon">🔒</div><p>+2 fotos</p></div>
+    <div class="gal-main"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" alt="Terreno" loading="lazy"/></div>
+    <div class="gal-thumb"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80" alt="Terreno" loading="lazy"/></div>
+    <div class="gal-thumb">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80" alt="" style="filter:blur(5px);transform:scale(1.04)" loading="lazy"/>
+      <div class="gal-lock"><div class="lock-icon">🔒</div><p>+2 fotos</p></div>
     </div>
   </div>
 </div>
 
-<!-- Info cards -->
-<div class="section" style="padding-top:0">
-  <div class="section-label">Informações do lote</div>
-  <div class="info-grid">
-    <div class="info-card"><div class="lbl">Cidade</div><div class="val" id="info-city">—</div></div>
-    <div class="info-card"><div class="lbl">Estado</div><div class="val" id="info-state">—</div></div>
-    <div class="info-card"><div class="lbl">Área total</div><div class="val" id="info-area">—</div></div>
-    <div class="info-card"><div class="lbl">Lance inicial</div><div class="val highlight" id="info-price">—</div></div>
+<!-- Info chips -->
+<div class="section">
+  <div class="section-title">Informações do lote</div>
+  <div class="info-row">
+    <div class="info-chip"><div class="chip-lbl">Cidade</div><div class="chip-val" id="info-city">—</div></div>
+    <div class="info-chip"><div class="chip-lbl">Estado</div><div class="chip-val" id="info-state">—</div></div>
+    <div class="info-chip"><div class="chip-lbl">Área total</div><div class="chip-val" id="info-area">—</div></div>
+    <div class="info-chip"><div class="chip-lbl">Lance inicial</div><div class="chip-val price" id="info-price">—</div></div>
   </div>
 </div>
 
-<!-- Benefícios -->
-<div class="section" style="padding-top:0">
-  <div class="section-label">Por que é uma boa oportunidade</div>
+<!-- Benefits -->
+<div class="section">
+  <div class="section-title">Por que é uma boa oportunidade</div>
   <div class="benefits">
     <div class="benefit">
-      <div class="icon" style="background:#16a34a18">📋</div>
-      <div class="benefit-text">
-        <strong>Documentação regularizada</strong>
-        <span>Matrícula limpa, sem ônus ou pendências no cartório.</span>
+      <div class="b-icon" style="background:#16a34a18">📋</div>
+      <div>
+        <div class="b-title">Documentação regularizada</div>
+        <div class="b-sub">Matrícula limpa, sem ônus ou pendências no cartório.</div>
       </div>
     </div>
     <div class="benefit">
-      <div class="icon" style="background:#2563eb18">🛣️</div>
-      <div class="benefit-text">
-        <strong>Infraestrutura completa</strong>
-        <span>Asfalto, água, luz e esgoto já instalados no local.</span>
+      <div class="b-icon" style="background:#2563eb18">🛣️</div>
+      <div>
+        <div class="b-title">Infraestrutura completa</div>
+        <div class="b-sub">Asfalto, água, luz e esgoto já instalados no local.</div>
       </div>
     </div>
     <div class="benefit">
-      <div class="icon" style="background:#f59e0b18">📈</div>
-      <div class="benefit-text">
-        <strong>Preço abaixo do mercado</strong>
-        <span>Lance inicial com desconto real em relação ao valor de avaliação.</span>
+      <div class="b-icon" style="background:#f59e0b18">📈</div>
+      <div>
+        <div class="b-title">Preço abaixo do mercado</div>
+        <div class="b-sub">Lance inicial com desconto real em relação ao valor de avaliação.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- GATE: formulário de desbloqueio -->
-<div class="gate-wrapper" id="gate">
-  <div class="gate-title">🔓 Ver localização e detalhes</div>
-  <p class="gate-sub">Preencha abaixo e libere <strong style="color:white">gratuitamente</strong> a localização exata, fotos completas e o PDF do lote.</p>
-  <div class="gate-perks">
-    <div class="gate-perk"><div class="pk-icon">📍</div>Localização exata no Google Maps</div>
-    <div class="gate-perk"><div class="pk-icon">📸</div>Todas as fotos do terreno</div>
-    <div class="gate-perk"><div class="pk-icon">📄</div>PDF com matrícula e detalhes completos</div>
-    <div class="gate-perk"><div class="pk-icon">💬</div>Atendimento imediato pelo WhatsApp</div>
-  </div>
-  <div class="gate-form">
-    <input class="gate-input" id="inp-nome" type="text" placeholder="Seu nome completo" autocomplete="name"/>
-    <input class="gate-input" id="inp-whatsapp" type="tel" placeholder="WhatsApp com DDD — ex: 61 98765-4321" autocomplete="tel"/>
-    <button class="gate-btn" id="btn-unlock" onclick="unlock()">
-      <div class="spinner" id="spinner"></div>
-      <span id="btn-label">Quero ver a localização →</span>
-    </button>
-    <p class="gate-terms">Seus dados são usados apenas para este contato. Sem spam.</p>
+<!-- Gate -->
+<div class="gate-section" id="gate-section">
+  <div class="gate-card">
+    <div class="prog-track"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+
+    <div class="gate-head">
+      <h2>🔓 Liberar localização e detalhes</h2>
+      <p>Preencha abaixo e acesse <strong style="color:#f1f5f9">gratuitamente</strong> a localização exata, todas as fotos e o PDF completo.</p>
+    </div>
+
+    <div class="gate-perks">
+      <div class="perk"><div class="perk-ico">📍</div>Localização exata no Google Maps</div>
+      <div class="perk"><div class="perk-ico">📸</div>Todas as fotos do terreno</div>
+      <div class="perk"><div class="perk-ico">📄</div>PDF com matrícula e detalhes</div>
+      <div class="perk"><div class="perk-ico">💬</div>Atendimento imediato pelo WhatsApp</div>
+    </div>
+
+    <div class="gate-form">
+      <div class="field">
+        <label for="inp-nome">Nome completo <span>*</span></label>
+        <div class="inp-wrap">
+          <span class="inp-ico">👤</span>
+          <input type="text" id="inp-nome" placeholder="Nome e sobrenome"
+            autocomplete="name" autocapitalize="words"
+            oninput="onNomeInput()" onfocus="clearErr('err-nome')"/>
+          <span class="inp-status" id="ok-nome" style="opacity:0">✅</span>
+        </div>
+        <span class="err-msg" id="err-nome">Informe seu nome completo.</span>
+      </div>
+
+      <div class="field">
+        <label for="inp-fone">WhatsApp com DDD <span>*</span></label>
+        <div class="inp-wrap">
+          <span class="inp-ico">📱</span>
+          <input type="tel" id="inp-fone" placeholder="(61) 99999-9999"
+            inputmode="numeric" autocomplete="tel"
+            oninput="onFoneInput()" onfocus="clearErr('err-fone')"/>
+          <span class="inp-status" id="ok-fone" style="opacity:0">✅</span>
+        </div>
+        <span class="err-msg" id="err-fone">Número inválido — inclua DDD + 9 dígitos.</span>
+      </div>
+
+      <button class="submit-btn" id="btn-submit" onclick="handleSubmit()">
+        <div class="spin" id="spinner"></div>
+        <span id="btn-label">Quero ver a localização →</span>
+      </button>
+      <p class="gate-terms">Seus dados são usados apenas para este contato. Sem spam.</p>
+    </div>
   </div>
 </div>
 
-<!-- DESBLOQUEADO -->
+<!-- Desbloqueado -->
 <div id="unlocked">
-  <div class="success-bar">
-    <div class="s-icon">✅</div>
-    <div>
-      <h3>Acesso liberado!</h3>
-      <p>Detalhes enviados também pelo WhatsApp.</p>
+  <div class="success-banner">
+    <div class="success-circle">
+      <svg width="38" height="38" fill="none" viewBox="0 0 24 24">
+        <path class="check-path" stroke="#22c55e" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
     </div>
+    <h3>Acesso liberado!</h3>
+    <p>Enviamos os detalhes agora pelo WhatsApp.<br/>Confira os links exclusivos abaixo 👇</p>
   </div>
-  <a class="action-btn maps" id="maps-btn" href="#" target="_blank">📍 Abrir localização no Google Maps</a>
-  <a class="action-btn pdf" id="pdf-btn" href="#" target="_blank" style="display:none">📄 Baixar PDF completo do lote</a>
-  <div class="full-desc-box" id="full-desc-box" style="display:none">
+
+  <div class="action-btns">
+    <a class="action-btn maps" id="btn-maps" href="#" target="_blank" rel="noopener">
+      📍 Abrir no Google Maps
+    </a>
+    <a class="action-btn pdf" id="btn-pdf" href="#" target="_blank" rel="noopener" style="display:none">
+      📄 Baixar PDF completo
+    </a>
+    <a class="action-btn wpp" id="btn-wpp" href="#" target="_blank" rel="noopener">
+      💬 Falar com nosso consultor
+    </a>
+  </div>
+
+  <div class="full-desc" id="full-desc" style="display:none">
     <h4>📋 Detalhes completos</h4>
     <p id="full-desc-text"></p>
   </div>
 </div>
 
-<div style="height:40px"></div>
+<div style="height:48px"></div>
 
 <script>
   const slug = new URLSearchParams(location.search).get('lot') || 'demo'
-  const PHOTOS = [
+  const FALLBACK = [
     'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80',
     'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80',
     'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80',
     'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&q=80',
   ]
 
-  fetch(`/api/lots/${slug}`)
+  // ── Carrega lote ──────────────────────────────────────────────────
+  fetch('/api/lots/' + slug)
     .then(r => r.json())
     .then(lot => {
-      document.title = (lot.title || 'Oportunidade de Leilão') + ' | Leilão de Terrenos'
-      document.getElementById('lot-title').textContent = lot.title || '—'
-      document.getElementById('lot-desc').textContent  = lot.description || ''
-      document.getElementById('stat-area').textContent  = lot.area_m2 ? `${Number(lot.area_m2).toLocaleString('pt-BR')} m²` : '—'
-      document.getElementById('stat-price').textContent = lot.price_from ? `R$ ${Number(lot.price_from).toLocaleString('pt-BR')}` : '—'
-      document.getElementById('stat-date').textContent  = lot.auction_date ? new Date(lot.auction_date + 'T12:00').toLocaleDateString('pt-BR', {day:'2-digit',month:'short'}) : '—'
-      document.getElementById('info-city').textContent  = lot.city || '—'
-      document.getElementById('info-state').textContent = lot.state || '—'
-      document.getElementById('info-area').textContent  = lot.area_m2 ? `${Number(lot.area_m2).toLocaleString('pt-BR')} m²` : '—'
-      document.getElementById('info-price').textContent = lot.price_from ? `R$ ${Number(lot.price_from).toLocaleString('pt-BR')}` : '—'
-
-      // Galeria com fotos reais do lote ou padrão
-      const photos = (lot.photos && lot.photos.length >= 3) ? lot.photos.map(p => p.url || p) : PHOTOS
-      const g = document.getElementById('gallery')
-      g.innerHTML = `
-        <div class="main"><img src="${photos[0]}" alt="Terreno" loading="lazy"/></div>
-        <div class="thumb"><img src="${photos[1]}" alt="Terreno" loading="lazy"/></div>
-        <div class="thumb blur-card">
-          <img src="${photos[2]}" alt="" loading="lazy"/>
-          <div class="overlay"><div class="icon">🔒</div><p>+${Math.max(1, photos.length - 2)} fotos</p></div>
-        </div>`
+      document.getElementById('page-title').textContent = (lot.title || 'Oportunidade') + ' | Leilão de Terrenos'
+      set('lot-title',  lot.title       || '—')
+      set('lot-desc',   lot.description || '')
+      set('stat-area',  lot.area_m2   ? fmt(lot.area_m2)  + ' m²' : '—')
+      set('stat-price', lot.price_from ? 'R$ ' + fmt(lot.price_from) : '—')
+      set('stat-date',  lot.auction_date
+        ? new Date(lot.auction_date + 'T12:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})
+        : '—')
+      set('info-city',  lot.city  || '—')
+      set('info-state', lot.state || '—')
+      set('info-area',  lot.area_m2  ? fmt(lot.area_m2)  + ' m²' : '—')
+      set('info-price', lot.price_from ? 'R$ ' + fmt(lot.price_from) : '—')
+      buildGallery(lot.photos, false)
     })
     .catch(() => {
-      document.getElementById('lot-title').textContent = 'Lote não encontrado'
-      document.getElementById('lot-desc').textContent  = 'Verifique o link e tente novamente.'
+      set('lot-title', 'Lote não encontrado')
+      set('lot-desc',  'Verifique o link e tente novamente.')
     })
 
-  async function unlock() {
-    const nome     = document.getElementById('inp-nome').value.trim()
-    const whatsapp = document.getElementById('inp-whatsapp').value.trim()
-    if (!nome)     { alert('Informe seu nome.'); return }
-    if (!whatsapp) { alert('Informe seu WhatsApp.'); return }
-    if (whatsapp.replace(/\D/g,'').length < 10) { alert('WhatsApp inválido — inclua o DDD.'); return }
+  function set(id, val)   { const el = document.getElementById(id); if (el) el.textContent = val }
+  function fmt(v)         { return Number(v).toLocaleString('pt-BR') }
+  function $el(id)        { return document.getElementById(id) }
 
-    const btn = document.getElementById('btn-unlock')
+  // ── Galeria ───────────────────────────────────────────────────────
+  function buildGallery(photos, unlocked) {
+    const imgs = photos && photos.length >= 2 ? photos.map(p => p.url || p) : FALLBACK
+    const g = $el('gallery')
+    if (unlocked) {
+      g.innerHTML = imgs.map((src, i) =>
+        i === 0
+          ? `<div class="gal-main"><img src="${src}" alt="Terreno" loading="lazy"/></div>`
+          : `<div class="gal-thumb"><img src="${src}" alt="Terreno" loading="lazy"/></div>`
+      ).join('')
+    } else {
+      const extra = Math.max(2, imgs.length - 2)
+      g.innerHTML = `
+        <div class="gal-main"><img src="${imgs[0]}" alt="Terreno" loading="lazy"/></div>
+        <div class="gal-thumb"><img src="${imgs[1]}" alt="Terreno" loading="lazy"/></div>
+        <div class="gal-thumb">
+          <img src="${imgs[2]||imgs[1]}" alt="" style="filter:blur(5px);transform:scale(1.04)" loading="lazy"/>
+          <div class="gal-lock"><div class="lock-icon">🔒</div><p>+${extra} fotos</p></div>
+        </div>`
+    }
+  }
+
+  // ── Máscara WhatsApp ──────────────────────────────────────────────
+  function onFoneInput() {
+    const el = $el('inp-fone')
+    const d  = el.value.replace(/\D/g,'').slice(0,11)
+    let v = d
+    if (d.length > 2) v = '(' + d.slice(0,2) + ') ' + d.slice(2)
+    if (d.length > 7) v = '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7)
+    el.value = v
+    const ok = d.length >= 10
+    setInputState(el, $el('ok-fone'), d.length > 0, ok)
+    updateProgress()
+  }
+
+  // ── Nome ──────────────────────────────────────────────────────────
+  function onNomeInput() {
+    const el = $el('inp-nome')
+    const ok = el.value.trim().length > 1
+    setInputState(el, $el('ok-nome'), el.value.length > 0, ok)
+    updateProgress()
+  }
+
+  function setInputState(inp, statusEl, touched, valid) {
+    inp.classList.toggle('valid',   touched && valid)
+    inp.classList.toggle('invalid', touched && !valid)
+    statusEl.style.opacity = (touched && valid) ? '1' : '0'
+  }
+
+  // ── Progress bar ──────────────────────────────────────────────────
+  function updateProgress() {
+    const nOk = $el('inp-nome').value.trim().length > 1
+    const fOk = $el('inp-fone').value.replace(/\D/g,'').length >= 10
+    $el('prog-bar').style.width = ([nOk, fOk].filter(Boolean).length * 50) + '%'
+  }
+
+  function clearErr(id) { $el(id).classList.remove('show') }
+
+  // ── Submissão ─────────────────────────────────────────────────────
+  async function handleSubmit() {
+    const nome   = $el('inp-nome').value.trim()
+    const digits = $el('inp-fone').value.replace(/\D/g,'')
+
+    let ok = true
+    if (nome.length < 2) {
+      $el('err-nome').classList.add('show')
+      $el('inp-nome').classList.add('invalid')
+      ok = false
+    }
+    if (digits.length < 10) {
+      $el('err-fone').classList.add('show')
+      $el('inp-fone').classList.add('invalid')
+      ok = false
+    }
+    if (!ok) return
+
+    const btn = $el('btn-submit')
     btn.disabled = true
-    document.getElementById('spinner').classList.add('show')
-    document.getElementById('btn-label').style.display = 'none'
+    $el('spinner').classList.add('show')
+    $el('btn-label').style.opacity = '0'
 
     try {
       const res  = await fetch('/api/leads', {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ nome, whatsapp, lotSlug: slug })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, whatsapp: digits, lotSlug: slug }),
       })
       const data = await res.json()
       if (!data.success) throw new Error(data.error || 'Erro desconhecido')
-
-      const u = data.unlocked
-
-      if (u.mapsUrl)  document.getElementById('maps-btn').href = u.mapsUrl
-      else            document.getElementById('maps-btn').style.display = 'none'
-
-      if (u.pdfUrl) {
-        document.getElementById('pdf-btn').href = u.pdfUrl
-        document.getElementById('pdf-btn').style.display = 'flex'
-      }
-
-      if (u.fullDescription) {
-        document.getElementById('full-desc-text').textContent = u.fullDescription
-        document.getElementById('full-desc-box').style.display = 'block'
-      }
-
-      // Troca gate por conteúdo desbloqueado
-      document.getElementById('gate').classList.add('hidden')
-      document.getElementById('unlocked').classList.add('show')
-
-      // Atualiza galeria com todas as fotos
-      if (u.photos && u.photos.length >= 3) {
-        const photos = u.photos.map(p => p.url || p)
-        const g = document.getElementById('gallery')
-        g.innerHTML = photos.map((p,i) => i === 0
-          ? `<div class="main"><img src="${p}" alt="Terreno"/></div>`
-          : `<div class="thumb"><img src="${p}" alt="Terreno"/></div>`
-        ).join('')
-      }
-
-      window.scrollTo({top: 0, behavior:'smooth'})
-    } catch(err) {
+      showUnlocked(data.unlocked)
+    } catch (err) {
       alert('Erro: ' + err.message)
       btn.disabled = false
-      document.getElementById('spinner').classList.remove('show')
-      document.getElementById('btn-label').style.display = 'block'
+      $el('spinner').classList.remove('show')
+      $el('btn-label').style.opacity = '1'
     }
+  }
+
+  // ── Tela desbloqueada ─────────────────────────────────────────────
+  function showUnlocked(u) {
+    if (u.mapsUrl) $el('btn-maps').href = u.mapsUrl
+    else           $el('btn-maps').style.display = 'none'
+
+    if (u.pdfUrl) {
+      $el('btn-pdf').href = u.pdfUrl
+      $el('btn-pdf').style.display = 'flex'
+    }
+
+    const wppNum = (u.consultorPhone || '').replace(/\D/g,'')
+    if (wppNum) {
+      const msg = 'Olá! Tenho interesse no lote ' + ($el('lot-title').textContent||'') + '. Pode me dar mais informações?'
+      $el('btn-wpp').href = 'https://wa.me/' + wppNum + '?text=' + encodeURIComponent(msg)
+    } else {
+      $el('btn-wpp').style.display = 'none'
+    }
+
+    if (u.fullDescription) {
+      $el('full-desc-text').textContent = u.fullDescription
+      $el('full-desc').style.display = 'block'
+    }
+
+    if (u.photos && u.photos.length >= 2) buildGallery(u.photos, true)
+
+    $el('gate-section').classList.add('hidden')
+    $el('unlocked').classList.add('show')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 </script>
 </body>
