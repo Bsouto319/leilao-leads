@@ -56,7 +56,7 @@ async function updateLeadStage(leadId, stage, notas) {
 }
 
 async function getLeads(filters = {}) {
-  let q = supabase.from('leilao_leads').select('*,leilao_lots(title,city,state)').order('created_at', { ascending: false })
+  let q = supabase.from('leilao_leads').select('*,leilao_lots(id,title,city,state,price_from,area_m2)').order('created_at', { ascending: false })
   if (filters.lotSlug) q = q.eq('lot_slug', filters.lotSlug)
   if (filters.stage)   q = q.eq('stage', filters.stage)
   const { data, error } = await q
