@@ -3,228 +3,335 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lote em Leilão</title>
+  <title>Oportunidade de Leilão</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',sans-serif;background:#0f172a;color:#f8fafc;min-height:100vh}
-    .hero{background:linear-gradient(160deg,#1e3a5f,#0f172a);padding:24px 20px 32px}
-    .badge{display:inline-flex;align-items:center;gap:6px;background:#f59e0b20;color:#f59e0b;border:1px solid #f59e0b40;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;margin-bottom:16px}
-    .badge span{width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:pulse 1.5s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-    h1{font-size:26px;font-weight:900;line-height:1.2;margin-bottom:8px}
-    h1 em{color:#38bdf8;font-style:normal}
-    .subtitle{color:#94a3b8;font-size:14px;line-height:1.5;margin-bottom:24px}
-    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
-    .info-card{background:#ffffff0d;border:1px solid #ffffff15;border-radius:12px;padding:14px}
-    .info-card .label{font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-    .info-card .value{font-size:15px;font-weight:800;color:#f8fafc}
-    .info-card .value.green{color:#4ade80}
-    .photos{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:24px;-webkit-overflow-scrolling:touch}
-    .photos img{height:160px;border-radius:12px;flex-shrink:0;object-fit:cover}
-    .photos .blur-wrap{position:relative;flex-shrink:0}
-    .photos .blur-wrap img{filter:blur(8px)}
-    .photos .blur-wrap .lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;background:#0f172a60;border-radius:12px}
-    .photos .blur-wrap .lock span{font-size:22px}
-    .photos .blur-wrap .lock p{font-size:10px;color:#94a3b8;font-weight:600}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
 
-    /* GATE */
-    .gate{background:#ffffff0a;border:1px solid #ffffff15;border-radius:20px;padding:24px;margin:0 20px 32px}
-    .gate-title{font-size:17px;font-weight:800;margin-bottom:4px}
-    .gate-sub{font-size:13px;color:#94a3b8;margin-bottom:20px;line-height:1.5}
-    .perks{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-    .perk{display:flex;align-items:center;gap:10px;font-size:13px;color:#cbd5e1}
-    .perk .icon{width:28px;height:28px;border-radius:8px;background:#38bdf820;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-    .form{display:flex;flex-direction:column;gap:12px}
-    .form input{padding:14px 16px;border-radius:12px;border:1.5px solid #334155;background:#1e293b;color:#f8fafc;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border .2s}
-    .form input:focus{border-color:#38bdf8}
-    .form input::placeholder{color:#475569}
-    .btn{padding:16px;border-radius:12px;border:none;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:white;font-size:16px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .btn-text{display:block}
-    .terms{font-size:11px;color:#475569;text-align:center;margin-top:8px}
+    /* ── TOPO ── */
+    .topbar{background:#0f172a;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+    .topbar-logo{display:flex;align-items:center;gap:10px}
+    .topbar-logo .dot{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center}
+    .topbar-logo .dot span{font-size:14px}
+    .topbar-brand{font-size:15px;font-weight:800;color:white}
+    .topbar-badge{background:#f59e0b;color:#0f172a;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;animation:badgepulse 2s infinite}
+    @keyframes badgepulse{0%,100%{opacity:1}50%{opacity:.7}}
 
-    /* UNLOCKED */
-    .unlocked{display:none;padding:0 20px 40px}
-    .unlocked.show{display:block}
-    .gate.hidden{display:none}
-    .success-banner{background:#16a34a20;border:1px solid #16a34a40;border-radius:14px;padding:16px;margin-bottom:20px;display:flex;align-items:center;gap:12px}
-    .success-banner .icon{font-size:28px}
-    .success-banner h3{font-size:15px;font-weight:800;color:#4ade80}
-    .success-banner p{font-size:12px;color:#86efac;margin-top:2px}
-    .map-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:14px;background:#0ea5e910;border:1.5px solid #0ea5e940;color:#38bdf8;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:12px;transition:background .2s}
-    .map-btn:hover{background:#0ea5e920}
-    .pdf-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:14px;background:#f59e0b10;border:1.5px solid #f59e0b40;color:#fbbf24;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:20px;transition:background .2s}
-    .pdf-btn:hover{background:#f59e0b20}
-    .full-desc{background:#ffffff08;border:1px solid #ffffff10;border-radius:14px;padding:16px;font-size:14px;color:#94a3b8;line-height:1.7}
+    /* ── HERO ── */
+    .hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);padding:40px 20px 48px;text-align:center}
+    .hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=60') center/cover;opacity:.08}
+    .hero-content{position:relative}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:#f59e0b18;color:#fbbf24;border:1px solid #f59e0b30;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:.04em;margin-bottom:20px}
+    .hero-eyebrow .live{width:7px;height:7px;border-radius:50%;background:#f59e0b;animation:pulse 1.4s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+    .hero h1{font-size:28px;font-weight:900;color:white;line-height:1.15;margin-bottom:12px}
+    .hero h1 em{color:#38bdf8;font-style:normal;display:block}
+    .hero-sub{color:#94a3b8;font-size:15px;line-height:1.6;max-width:340px;margin:0 auto 28px}
 
-    /* Loading */
-    .spinner{width:20px;height:20px;border:2.5px solid #ffffff40;border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+    /* Estatísticas rápidas */
+    .hero-stats{display:flex;gap:0;justify-content:center;background:#ffffff0d;border:1px solid #ffffff10;border-radius:16px;overflow:hidden;margin:0 auto;max-width:360px}
+    .hero-stat{flex:1;padding:14px 8px;text-align:center;border-right:1px solid #ffffff10}
+    .hero-stat:last-child{border-right:none}
+    .hero-stat-val{font-size:18px;font-weight:900;color:white}
+    .hero-stat-val.green{color:#4ade80}
+    .hero-stat-val.yellow{color:#fbbf24}
+    .hero-stat-lbl{font-size:10px;color:#64748b;margin-top:2px;font-weight:600}
+
+    /* ── GALERIA ── */
+    .section{padding:24px 20px}
+    .section-label{font-size:11px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .section-label::after{content:'';flex:1;height:1px;background:#e2e8f0}
+
+    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .gallery .main{grid-column:1/-1;border-radius:14px;overflow:hidden;position:relative;height:200px}
+    .gallery .main img{width:100%;height:100%;object-fit:cover}
+    .gallery .thumb{border-radius:10px;overflow:hidden;height:110px;position:relative}
+    .gallery .thumb img{width:100%;height:100%;object-fit:cover}
+    .gallery .thumb.blur-card img{filter:blur(6px);transform:scale(1.05)}
+    .gallery .thumb.blur-card .overlay{position:absolute;inset:0;background:rgba(15,23,42,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+    .gallery .thumb.blur-card .overlay .icon{font-size:22px}
+    .gallery .thumb.blur-card .overlay p{font-size:11px;color:white;font-weight:700}
+
+    /* ── INFO CARDS ── */
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
+    .info-card{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:14px}
+    .info-card .lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+    .info-card .val{font-size:16px;font-weight:800;color:#0f172a}
+    .info-card .val.highlight{color:#16a34a}
+
+    /* ── BENEFÍCIOS ── */
+    .benefits{background:white;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin-bottom:16px}
+    .benefit{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9}
+    .benefit:last-child{border-bottom:none;padding-bottom:0}
+    .benefit .icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .benefit-text strong{display:block;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:2px}
+    .benefit-text span{font-size:12px;color:#64748b;line-height:1.4}
+
+    /* ── GATE ── */
+    .gate-wrapper{background:linear-gradient(160deg,#0f172a,#1e3a5f);border-radius:20px;padding:24px;margin:0 20px 32px;box-shadow:0 8px 32px rgba(15,23,42,.2)}
+    .gate-title{font-size:18px;font-weight:900;color:white;margin-bottom:6px}
+    .gate-sub{font-size:13px;color:#94a3b8;line-height:1.5;margin-bottom:20px}
+    .gate-perks{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+    .gate-perk{display:flex;align-items:center;gap:10px;color:#cbd5e1;font-size:13px;font-weight:500}
+    .gate-perk .pk-icon{width:28px;height:28px;border-radius:8px;background:#38bdf818;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+    .gate-form{display:flex;flex-direction:column;gap:10px}
+    .gate-input{padding:15px 16px;border-radius:12px;border:1.5px solid #334155;background:#1e293b;color:#f8fafc;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border .2s;width:100%}
+    .gate-input::placeholder{color:#475569}
+    .gate-input:focus{border-color:#38bdf8}
+    .gate-btn{padding:16px;border-radius:12px;border:none;background:linear-gradient(135deg,#f59e0b,#ef4444);color:white;font-size:16px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;box-shadow:0 4px 16px rgba(245,158,11,.3)}
+    .gate-btn:disabled{opacity:.6;cursor:not-allowed}
+    .gate-terms{font-size:11px;color:#475569;text-align:center;margin-top:6px}
+
+    /* ── SPINNER ── */
+    .spinner{width:18px;height:18px;border:2.5px solid #ffffff40;border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
     @keyframes spin{to{transform:rotate(360deg)}}
     .spinner.show{display:block}
-    .btn-text.hidden{display:none}
+
+    /* ── DESBLOQUEADO ── */
+    #unlocked{display:none}
+    #unlocked.show{display:block}
+    .gate-wrapper.hidden{display:none}
+
+    .success-bar{display:flex;align-items:center;gap:12px;background:#16a34a18;border:1px solid #16a34a30;border-radius:14px;padding:14px 16px;margin:0 20px 16px}
+    .success-bar .s-icon{font-size:28px}
+    .success-bar h3{font-size:14px;font-weight:800;color:#4ade80}
+    .success-bar p{font-size:12px;color:#86efac;margin-top:1px}
+
+    .action-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:14px;font-size:15px;font-weight:800;text-decoration:none;margin:0 20px 10px;transition:opacity .15s}
+    .action-btn:hover{opacity:.85}
+    .action-btn.maps{background:#0ea5e9;color:white;box-shadow:0 4px 16px rgba(14,165,233,.3)}
+    .action-btn.pdf{background:#f59e0b;color:white;box-shadow:0 4px 16px rgba(245,158,11,.3)}
+
+    .full-desc-box{margin:0 20px 32px;background:white;border:1px solid #e2e8f0;border-radius:14px;padding:18px}
+    .full-desc-box h4{font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+    .full-desc-box p{font-size:14px;color:#374151;line-height:1.7}
   </style>
 </head>
 <body>
 
-<div id="app">
-  <!-- Hero -->
-  <div class="hero">
-    <div class="badge"><span></span> LEILÃO ATIVO</div>
-    <h1 id="lot-title">Carregando...</h1>
-    <p class="subtitle" id="lot-desc">Aguarde...</p>
-
-    <div class="info-grid">
-      <div class="info-card">
-        <div class="label">Localização</div>
-        <div class="value" id="lot-city">—</div>
-      </div>
-      <div class="info-card">
-        <div class="label">Área</div>
-        <div class="value" id="lot-area">—</div>
-      </div>
-      <div class="info-card">
-        <div class="label">Lance inicial</div>
-        <div class="value green" id="lot-price">—</div>
-      </div>
-      <div class="info-card">
-        <div class="label">Data do leilão</div>
-        <div class="value" id="lot-date">—</div>
-      </div>
-    </div>
-
-    <!-- Fotos (última blur) -->
-    <div class="photos" id="lot-photos"></div>
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="dot"><span>🏠</span></div>
+    <span class="topbar-brand">Leilão de Terrenos</span>
   </div>
+  <div class="topbar-badge">🔥 LEILÃO ATIVO</div>
+</div>
 
-  <!-- Gate: formulário para desbloquear -->
-  <div class="gate" id="gate">
-    <div class="gate-title">🔓 Desbloqueie as informações completas</div>
-    <p class="gate-sub">Preencha abaixo para receber a localização exata, fotos completas e o PDF detalhado <strong>gratuitamente</strong>.</p>
-    <div class="perks">
-      <div class="perk"><div class="icon">📍</div>Localização exata no Google Maps</div>
-      <div class="perk"><div class="icon">📄</div>PDF com matrícula, fotos e detalhes</div>
-      <div class="perk"><div class="icon">💬</div>Atendimento imediato pelo WhatsApp</div>
-    </div>
-    <div class="form">
-      <input id="input-nome" type="text" placeholder="Seu nome completo" autocomplete="name"/>
-      <input id="input-whatsapp" type="tel" placeholder="WhatsApp com DDD (ex: 61 98765-4321)" autocomplete="tel"/>
-      <button class="btn" id="btn-submit" onclick="submitLead()">
-        <div class="spinner" id="spinner"></div>
-        <span class="btn-text" id="btn-text">Quero ver a localização →</span>
-      </button>
-      <p class="terms">Seus dados são usados apenas para contato sobre este imóvel.</p>
-    </div>
-  </div>
-
-  <!-- Desbloqueado -->
-  <div class="unlocked" id="unlocked">
-    <div class="success-banner">
-      <div class="icon">✅</div>
-      <div>
-        <h3>Acesso liberado!</h3>
-        <p>Enviamos os detalhes também pelo WhatsApp.</p>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="live"></div> OPORTUNIDADE EXCLUSIVA</div>
+    <h1 id="lot-title">Carregando lote...</h1>
+    <p class="hero-sub" id="lot-desc">Aguarde enquanto carregamos as informações do lote.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="stat-area">—</div>
+        <div class="hero-stat-lbl">Área</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val green" id="stat-price">—</div>
+        <div class="hero-stat-lbl">Lance inicial</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val yellow" id="stat-date">—</div>
+        <div class="hero-stat-lbl">Data leilão</div>
       </div>
     </div>
-    <a class="map-btn" id="maps-link" href="#" target="_blank">
-      📍 Abrir localização no Google Maps
-    </a>
-    <a class="pdf-btn" id="pdf-link" href="#" target="_blank">
-      📄 Baixar PDF completo do lote
-    </a>
-    <div class="full-desc" id="full-desc"></div>
   </div>
 </div>
 
-<script>
-  const API = ''  // mesmo domínio
-  const slug = new URLSearchParams(location.search).get('lot') || location.pathname.split('/').filter(Boolean).pop()
+<!-- Galeria -->
+<div class="section">
+  <div class="section-label">Fotos do terreno</div>
+  <div class="gallery" id="gallery">
+    <div class="main"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" alt="Terreno"/></div>
+    <div class="thumb"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80" alt="Terreno"/></div>
+    <div class="thumb blur-card">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80" alt=""/>
+      <div class="overlay"><div class="icon">🔒</div><p>+2 fotos</p></div>
+    </div>
+  </div>
+</div>
 
-  // Carrega lote
-  fetch(`${API}/api/lots/${slug}`)
+<!-- Info cards -->
+<div class="section" style="padding-top:0">
+  <div class="section-label">Informações do lote</div>
+  <div class="info-grid">
+    <div class="info-card"><div class="lbl">Cidade</div><div class="val" id="info-city">—</div></div>
+    <div class="info-card"><div class="lbl">Estado</div><div class="val" id="info-state">—</div></div>
+    <div class="info-card"><div class="lbl">Área total</div><div class="val" id="info-area">—</div></div>
+    <div class="info-card"><div class="lbl">Lance inicial</div><div class="val highlight" id="info-price">—</div></div>
+  </div>
+</div>
+
+<!-- Benefícios -->
+<div class="section" style="padding-top:0">
+  <div class="section-label">Por que é uma boa oportunidade</div>
+  <div class="benefits">
+    <div class="benefit">
+      <div class="icon" style="background:#16a34a18">📋</div>
+      <div class="benefit-text">
+        <strong>Documentação regularizada</strong>
+        <span>Matrícula limpa, sem ônus ou pendências no cartório.</span>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="icon" style="background:#2563eb18">🛣️</div>
+      <div class="benefit-text">
+        <strong>Infraestrutura completa</strong>
+        <span>Asfalto, água, luz e esgoto já instalados no local.</span>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="icon" style="background:#f59e0b18">📈</div>
+      <div class="benefit-text">
+        <strong>Preço abaixo do mercado</strong>
+        <span>Lance inicial com desconto real em relação ao valor de avaliação.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GATE: formulário de desbloqueio -->
+<div class="gate-wrapper" id="gate">
+  <div class="gate-title">🔓 Ver localização e detalhes</div>
+  <p class="gate-sub">Preencha abaixo e libere <strong style="color:white">gratuitamente</strong> a localização exata, fotos completas e o PDF do lote.</p>
+  <div class="gate-perks">
+    <div class="gate-perk"><div class="pk-icon">📍</div>Localização exata no Google Maps</div>
+    <div class="gate-perk"><div class="pk-icon">📸</div>Todas as fotos do terreno</div>
+    <div class="gate-perk"><div class="pk-icon">📄</div>PDF com matrícula e detalhes completos</div>
+    <div class="gate-perk"><div class="pk-icon">💬</div>Atendimento imediato pelo WhatsApp</div>
+  </div>
+  <div class="gate-form">
+    <input class="gate-input" id="inp-nome" type="text" placeholder="Seu nome completo" autocomplete="name"/>
+    <input class="gate-input" id="inp-whatsapp" type="tel" placeholder="WhatsApp com DDD — ex: 61 98765-4321" autocomplete="tel"/>
+    <button class="gate-btn" id="btn-unlock" onclick="unlock()">
+      <div class="spinner" id="spinner"></div>
+      <span id="btn-label">Quero ver a localização →</span>
+    </button>
+    <p class="gate-terms">Seus dados são usados apenas para este contato. Sem spam.</p>
+  </div>
+</div>
+
+<!-- DESBLOQUEADO -->
+<div id="unlocked">
+  <div class="success-bar">
+    <div class="s-icon">✅</div>
+    <div>
+      <h3>Acesso liberado!</h3>
+      <p>Detalhes enviados também pelo WhatsApp.</p>
+    </div>
+  </div>
+  <a class="action-btn maps" id="maps-btn" href="#" target="_blank">📍 Abrir localização no Google Maps</a>
+  <a class="action-btn pdf" id="pdf-btn" href="#" target="_blank" style="display:none">📄 Baixar PDF completo do lote</a>
+  <div class="full-desc-box" id="full-desc-box" style="display:none">
+    <h4>📋 Detalhes completos</h4>
+    <p id="full-desc-text"></p>
+  </div>
+</div>
+
+<div style="height:40px"></div>
+
+<script>
+  const slug = new URLSearchParams(location.search).get('lot') || 'demo'
+  const PHOTOS = [
+    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80',
+    'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80',
+    'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80',
+    'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&q=80',
+  ]
+
+  fetch(`/api/lots/${slug}`)
     .then(r => r.json())
     .then(lot => {
-      document.title = lot.title || 'Lote em Leilão'
-      document.getElementById('lot-title').textContent = lot.title
+      document.title = (lot.title || 'Oportunidade de Leilão') + ' | Leilão de Terrenos'
+      document.getElementById('lot-title').textContent = lot.title || '—'
       document.getElementById('lot-desc').textContent  = lot.description || ''
-      document.getElementById('lot-city').textContent  = lot.city && lot.state ? `${lot.city} - ${lot.state}` : (lot.city || '—')
-      document.getElementById('lot-area').textContent  = lot.area_m2 ? `${Number(lot.area_m2).toLocaleString('pt-BR')} m²` : '—'
-      document.getElementById('lot-price').textContent = lot.price_from
-        ? `R$ ${Number(lot.price_from).toLocaleString('pt-BR')}`
-        : '—'
-      document.getElementById('lot-date').textContent  = lot.auction_date
-        ? new Date(lot.auction_date + 'T12:00:00').toLocaleDateString('pt-BR')
-        : '—'
+      document.getElementById('stat-area').textContent  = lot.area_m2 ? `${Number(lot.area_m2).toLocaleString('pt-BR')} m²` : '—'
+      document.getElementById('stat-price').textContent = lot.price_from ? `R$ ${Number(lot.price_from).toLocaleString('pt-BR')}` : '—'
+      document.getElementById('stat-date').textContent  = lot.auction_date ? new Date(lot.auction_date + 'T12:00').toLocaleDateString('pt-BR', {day:'2-digit',month:'short'}) : '—'
+      document.getElementById('info-city').textContent  = lot.city || '—'
+      document.getElementById('info-state').textContent = lot.state || '—'
+      document.getElementById('info-area').textContent  = lot.area_m2 ? `${Number(lot.area_m2).toLocaleString('pt-BR')} m²` : '—'
+      document.getElementById('info-price').textContent = lot.price_from ? `R$ ${Number(lot.price_from).toLocaleString('pt-BR')}` : '—'
 
-      // Fotos (até 2 visíveis + 1 blur)
-      const container = document.getElementById('lot-photos')
-      const DEFAULT_PHOTOS = [
-        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80',
-        'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80',
-        'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80',
-      ]
-      const photos = (lot.photos && lot.photos.length > 0) ? lot.photos : DEFAULT_PHOTOS.map(u => ({ url: u }))
-      photos.slice(0, 2).forEach(p => {
-        const img = document.createElement('img')
-        img.src = p.url || p
-        img.style.width = '200px'
-        container.appendChild(img)
-      })
-      const blurSrc = photos[2]?.url || photos[2] || DEFAULT_PHOTOS[2]
-      const wrap = document.createElement('div')
-      wrap.className = 'blur-wrap'
-      wrap.style.width = '200px'
-      wrap.innerHTML = `<img src="${blurSrc}" style="width:200px;height:160px;object-fit:cover"/><div class="lock"><span>🔒</span><p>${photos.length > 3 ? '+' + (photos.length - 2) + ' fotos' : 'Ver todas'}</p></div>`
-      container.appendChild(wrap)
+      // Galeria com fotos reais do lote ou padrão
+      const photos = (lot.photos && lot.photos.length >= 3) ? lot.photos.map(p => p.url || p) : PHOTOS
+      const g = document.getElementById('gallery')
+      g.innerHTML = `
+        <div class="main"><img src="${photos[0]}" alt="Terreno" loading="lazy"/></div>
+        <div class="thumb"><img src="${photos[1]}" alt="Terreno" loading="lazy"/></div>
+        <div class="thumb blur-card">
+          <img src="${photos[2]}" alt="" loading="lazy"/>
+          <div class="overlay"><div class="icon">🔒</div><p>+${Math.max(1, photos.length - 2)} fotos</p></div>
+        </div>`
     })
     .catch(() => {
       document.getElementById('lot-title').textContent = 'Lote não encontrado'
+      document.getElementById('lot-desc').textContent  = 'Verifique o link e tente novamente.'
     })
 
-  function submitLead() {
-    const nome      = document.getElementById('input-nome').value.trim()
-    const whatsapp  = document.getElementById('input-whatsapp').value.trim()
+  async function unlock() {
+    const nome     = document.getElementById('inp-nome').value.trim()
+    const whatsapp = document.getElementById('inp-whatsapp').value.trim()
     if (!nome)     { alert('Informe seu nome.'); return }
     if (!whatsapp) { alert('Informe seu WhatsApp.'); return }
+    if (whatsapp.replace(/\D/g,'').length < 10) { alert('WhatsApp inválido — inclua o DDD.'); return }
 
-    const btn = document.getElementById('btn-submit')
+    const btn = document.getElementById('btn-unlock')
     btn.disabled = true
     document.getElementById('spinner').classList.add('show')
-    document.getElementById('btn-text').classList.add('hidden')
+    document.getElementById('btn-label').style.display = 'none'
 
-    fetch(`${API}/api/leads`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, whatsapp, lotSlug: slug })
-    })
-      .then(r => r.json())
-      .then(data => {
-        if (!data.success) throw new Error(data.error || 'Erro desconhecido')
-        const u = data.unlocked
-
-        // Mostrar mapa
-        if (u.mapsUrl) document.getElementById('maps-link').href = u.mapsUrl
-        else document.getElementById('maps-link').style.display = 'none'
-
-        // Mostrar PDF
-        if (u.pdfUrl) document.getElementById('pdf-link').href = u.pdfUrl
-        else document.getElementById('pdf-link').style.display = 'none'
-
-        // Descrição completa
-        if (u.fullDescription) document.getElementById('full-desc').textContent = u.fullDescription
-
-        // Trocar gate por conteúdo desbloqueado
-        document.getElementById('gate').classList.add('hidden')
-        document.getElementById('unlocked').classList.add('show')
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+    try {
+      const res  = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ nome, whatsapp, lotSlug: slug })
       })
-      .catch(err => {
-        alert('Erro: ' + err.message)
-        btn.disabled = false
-        document.getElementById('spinner').classList.remove('show')
-        document.getElementById('btn-text').classList.remove('hidden')
-      })
+      const data = await res.json()
+      if (!data.success) throw new Error(data.error || 'Erro desconhecido')
+
+      const u = data.unlocked
+
+      if (u.mapsUrl)  document.getElementById('maps-btn').href = u.mapsUrl
+      else            document.getElementById('maps-btn').style.display = 'none'
+
+      if (u.pdfUrl) {
+        document.getElementById('pdf-btn').href = u.pdfUrl
+        document.getElementById('pdf-btn').style.display = 'flex'
+      }
+
+      if (u.fullDescription) {
+        document.getElementById('full-desc-text').textContent = u.fullDescription
+        document.getElementById('full-desc-box').style.display = 'block'
+      }
+
+      // Troca gate por conteúdo desbloqueado
+      document.getElementById('gate').classList.add('hidden')
+      document.getElementById('unlocked').classList.add('show')
+
+      // Atualiza galeria com todas as fotos
+      if (u.photos && u.photos.length >= 3) {
+        const photos = u.photos.map(p => p.url || p)
+        const g = document.getElementById('gallery')
+        g.innerHTML = photos.map((p,i) => i === 0
+          ? `<div class="main"><img src="${p}" alt="Terreno"/></div>`
+          : `<div class="thumb"><img src="${p}" alt="Terreno"/></div>`
+        ).join('')
+      }
+
+      window.scrollTo({top: 0, behavior:'smooth'})
+    } catch(err) {
+      alert('Erro: ' + err.message)
+      btn.disabled = false
+      document.getElementById('spinner').classList.remove('show')
+      document.getElementById('btn-label').style.display = 'block'
+    }
   }
 </script>
 </body>

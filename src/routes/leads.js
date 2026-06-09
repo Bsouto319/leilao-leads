@@ -68,12 +68,14 @@ router.post('/leads', async (req, res) => {
     }
   }
 
-  // Salva lead
-  let lead
-  try {
-    lead = await db.saveLead({ lotId: lot.id, lotSlug, nome, whatsapp: digits, regionInterest, priceRange })
-  } catch (err) {
-    return res.status(500).json({ error: 'Erro ao salvar lead' })
+  // Salva lead (demo não persiste no banco)
+  let lead = { id: null }
+  if (lotSlug !== 'demo') {
+    try {
+      lead = await db.saveLead({ lotId: lot.id, lotSlug, nome, whatsapp: digits, regionInterest, priceRange })
+    } catch (err) {
+      return res.status(500).json({ error: 'Erro ao salvar lead' })
+    }
   }
 
   // Retorna dados desbloqueados imediatamente
